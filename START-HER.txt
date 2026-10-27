@@ -1,0 +1,55 @@
+LEASING BIL KILOMETER
+
+En enkel app med dato, kilometerstand og sammenligning fra måned til måned.
+Den er leveret som filer og er ikke publiceret.
+
+SÅDAN BRUGES DEN
+Indtast dato og kilometertællerens samlede tal, fx 24500. Ingen punktummer
+eller mellemrum. Der gemmes én aflæsning pr. måned. Gemmer du igen i samme
+måned, spørger appen, før den eksisterende aflæsning erstattes.
+
+Eksempel:
+1. juli: 20000 km – udgangspunkt.
+1. august: 21100 km – du har kørt 1100 km siden sidste aflæsning.
+1. september: 22000 km – du har kørt 900 km, altså 200 km mindre end
+i forrige månedsperiode.
+
+Aflæs helst samme dag hver måned. Det er forskellen mellem de faktiske
+aflæsninger, der vises, ikke en beregning af præcise kalendermåneder.
+Springer du en måned over, vises distance siden sidste aflæsning, men
+månedssammenligningen udelades. Du kan rette og slette i historikken.
+
+Data gemmes kun på denne enhed, i den browser eller hjemmeskærm-app, du
+bruger. Ingen konto eller synkronisering. Rydning af webstedsdata kan
+fjerne aflæsningerne. Denne enkle app har ikke eksport/import eller
+automatisk backup. Brug samme app hver gang; Safari og hjemmeskærm-appen
+kan have forskelligt lager.
+
+GITHUB PAGES – SAMME FREMGANGSMÅDE SOM MÅLERBLIK
+1. Opret et NYT offentligt GitHub-projekt, fx leasing-bil-kilometer.
+   Brug et nyt projekt, så Målerblik bevares.
+2. Pak ZIP-filen ud. Upload filerne INDE i leasing-bil-kilometer-mappen
+   direkte i det nye projekt. index.html skal ligge i øverste niveau.
+   Upload ikke kun ZIP-filen. Der er ingen installation eller byggetrin.
+3. Settings > Pages > Deploy from a branch > main > / (root) > Save.
+4. Vent på den webadresse, som GitHub viser. Åbn den i Safari på iPhone.
+5. Del > Føj til hjemmeskærm > Åbn som webapp (hvis valget vises) > Tilføj.
+6. Åbn appen fra det nye ikon med internet. Under Godt at vide kan du se
+   Klar til offline, når appfilerne er hentet.
+
+Hvis dit brugernavn fortsat er henriksorensen1, og projektet hedder
+leasing-bil-kilometer, vil den forventede adresse være:
+https://henriksorensen1.github.io/leasing-bil-kilometer/
+Adressen bliver først aktiv, når DU har uploadet og aktiveret Pages.
+
+Appen kan også ligge på et almindeligt webhotel med HTTPS. Hold index.html,
+style.css, app.mjs, core.mjs, sw.js, manifest.webmanifest og alle ikoner i
+samme mappe. .mjs-filer skal serveres som JavaScript. Appen fungerer også
+i en undermappe. Offline kræver HTTPS eller localhost ved test.
+
+Ved opdateringer: upload alle appfiler, og øg cacheversionen i sw.js
+(v1 til v2 osv.). Luk alle appvinduer, og genåbn med internet.
+
+Valgfri lokal test på computer: start en statisk server i mappen, fx
+python3 -m http.server 8080 --bind 127.0.0.1, og åbn http://localhost:8080/.
+Med Node.js kan beregningstests køres med node --test tests/core.test.mjs.

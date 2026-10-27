@@ -1,0 +1,8 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {validate,parseKm,periods,summary,upsert} from '../core.mjs';
+const rows=[{date:'2026-07-01',km:20000},{date:'2026-08-01',km:21100},{date:'2026-09-01',km:22000}];
+test('Månedsperioder beregner distance og forskel fra forrige periode',()=>{const s=summary(rows);assert.equal(s.last.distance,900);assert.equal(s.change,-200);assert.equal(summary(rows.slice(0,1)).last.distance,null);assert.equal(summary(rows.slice(0,2)).change,null);});
+test('Manglende måned tilskrives ikke fejlagtigt en enkelt måned',()=>{const s=summary([rows[0],rows[2]]);assert.equal(s.last.distance,2000);assert.equal(s.change,null);assert.equal(s.last.consecutive,false);});
+test('Sammenligning over årsskifte og nul kilometer',()=>{assert.equal(summary([{date:'2025-12-05',km:500},{date:'2026-01-05',km:500},{date:'2026-02-05',km:600}]).change,100);assert.equal(parseKm('0'),0);});
+test('Rettelser og efterregistrering beregner igen, uden at fordoble måneden',()=>{const r=upsert(rows,{date:'2026-08-02',km:21200});assert.equal(r.length,3);assert.equal(summary(r).last.distance,800);assert.equal(summary(r).change,-400);assert.deepEqual(periods([rows[2],rows[0],rows[1]]).map(r=>r.distance),[null,1100,900]);});
+test('Afviser faldende tæller, dubletter, fremtid og forkerte tal',()=>{assert.throws(()=>validate([...rows,{date:'2026-10-01',km:21000}]));assert.throws(()=>validate([...rows,{date:'2026-09-03',km:22500}]));assert.throws(()=>validate([{date:'2999-01-01',km:0}]));assert.throws(()=>validate([{date:'2026-02-30',km:0}]));assert.throws(()=>validate([{date:'2026-01-01',km:1.5}]));for(const s of ['1.000','1,5','-5','','1e3','10000000'])assert.throws(()=>parseKm(s));});

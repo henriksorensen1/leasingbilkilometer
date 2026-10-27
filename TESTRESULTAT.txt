@@ -1,0 +1,31 @@
+LEASING BIL KILOMETER – TESTRESULTAT
+26. oktober 2026
+
+5 automatiske tests bestået:
+- Kilometer mellem aflæsninger og sammenligning mellem to månedsperioder.
+- Manglende måneder vises ikke fejlagtigt som én måneds forbrug.
+- Årsskifte og nul kørte kilometer.
+- Rettelse og efterregistrering uden at fordoble en måned.
+- Afvisning af faldende tæller, gentagne måneder, fremtidige datoer,
+  ugyldige kalenderdatoer, decimaler og andre ugyldige tal.
+
+Appens JavaScript-filer bestod syntaxkontrol.
+
+Afprøvet i den lokale in-app-browser på macOS:
+- Tre indtastninger: 20000, 21100 og 22000 km på tre månedlige datoer.
+- Viste 1100 km, derefter 900 km og 200 km mindre end forrige periode.
+- Genindlæsning bevarede alle aflæsninger.
+- Forsøg på at rette en tidligere aflæsning til en ugyldigt lavere stand
+  blev afvist uden at ændre historikken.
+- Mobilvisning ved 390 pixels uden vandret overløb.
+- Service worker hentede alle nødvendige appfiler; Klar til offline.
+- Med lokal webserver helt slukket: genåbning, ny aflæsning, beregning af
+  1200 km og 300 km mere end forrige periode samt endnu en genindlæsning
+  med alle fire aflæsninger bevaret.
+- Ingen konsolfejl i den afsluttende kontrol.
+
+Ikke testet på fysisk iPhone, installeret iOS-webapp eller offentlig
+hosting. Lagerblokering, fyldt lager, samtidige vinduer og sletteknappen
+er ikke fremprovokeret i browsertesten. Testkoden medfølger i tests/.
+
+Leverancen starter uden aflæsninger. Forhåndsvisningen viser prøvetal.
